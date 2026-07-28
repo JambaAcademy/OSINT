@@ -1,0 +1,10 @@
+1/15/26, 9:41 AM - Jordan Sample: Hey, are we still on for tomorrow?
+1/15/26, 9:43 AM - Morgan Example: Yes! See you at 10.
+1/15/26, 2:15 PM - Jordan Sample: Great, sending the address now.
+1/15/26, 2:16 PM - Jordan Sample: 123 Main Street, see you there
+1/16/26, 10:02 AM - Morgan Example: Just arrived, where are you?
+1/16/26, 10:05 AM - Jordan Sample: Running 5 min late, sorry!
+1/17/26, 8:30 AM - Morgan Example: Can you email me the report? morgan.example@example.com
+1/17/26, 8:45 AM - Jordan Sample: Sure, sending to that address shortly.
+1/17/26, 8:50 AM - Jordan Sample: Also here's the link: https://example.com/report
+1/18/26, 6:00 PM - Morgan Example: Thanks! Call me at 415-555-0199 if anything comes up.

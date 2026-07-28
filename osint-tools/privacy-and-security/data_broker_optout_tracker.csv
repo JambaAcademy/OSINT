@@ -1,0 +1,10 @@
+Service Name,Opt-Out URL,Method,Date Submitted,Confirmation Received (Y/N),Confirmation Date,Re-Check Due Date,Notes
+Whitepages,https://www.whitepages.com/suppression-requests,Online form,[Date],[Y/N],[Date],[Date + 6 months],[Notes]
+Spokeo,https://www.spokeo.com/optout,Online form,[Date],[Y/N],[Date],[Date + 6 months],[Notes]
+BeenVerified,https://www.beenverified.com/app/optout/search,Online form,[Date],[Y/N],[Date],[Date + 6 months],[Notes]
+Intelius,https://www.intelius.com/optout,Online form,[Date],[Y/N],[Date],[Date + 6 months],[Notes]
+TruthFinder,https://www.truthfinder.com/opt-out/,Online form,[Date],[Y/N],[Date],[Date + 6 months],[Notes]
+PeopleFinders,https://www.peoplefinders.com/manage,Online form or email,[Date],[Y/N],[Date],[Date + 6 months],[Notes]
+MyLife,https://www.mylife.com/ccpa/index.pubview,Online form,[Date],[Y/N],[Date],[Date + 6 months],[Notes]
+Radaris,https://radaris.com/page/how-to-remove,Online form,[Date],[Y/N],[Date],[Date + 6 months],[Notes]
+[Additional service name],[Opt-out URL],[Method],[Date],[Y/N],[Date],[Date],[Notes]

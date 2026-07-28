@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Findings Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --paper: #eef1f0;
+    --panel: #ffffff;
+    --ink: #1b2430;
+    --muted: #5b6b7a;
+    --line: #d7dde2;
+    --accent: #a86b1f;
+    --accent-soft: #f3e6d3;
+    --flag-high: #9c3b3b;
+    --flag-high-soft: #f3e0e0;
+    --flag-med: #9a7209;
+    --flag-med-soft: #f3ecd3;
+    --flag-low: #5b6b7a;
+    --flag-low-soft: #e7eaec;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .wrap {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 32px 24px 64px;
+  }
+
+  /* ---------- Header ---------- */
+  .case-header {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 20px;
+    margin-bottom: 28px;
+    gap: 24px;
+  }
+
+  .case-header h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin: 0 0 6px;
+  }
+
+  .case-meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    color: var(--muted);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 18px;
+  }
+
+  .case-meta span b {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .stamp {
+    flex-shrink: 0;
+    border: 2px dashed var(--accent);
+    color: var(--accent);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 10px 14px;
+    transform: rotate(3deg);
+    border-radius: 3px;
+    text-align: center;
+    line-height: 1.6;
+    background: var(--accent-soft);
+  }
+
+  /* ---------- Stat strip ---------- */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+
+  .stat-card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 16px 18px;
+  }
+
+  .stat-card .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .stat-card .value {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 26px;
+    font-weight: 500;
+  }
+
+  /* ---------- Chart row ---------- */
+  .chart-row {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 18px 20px;
+  }
+
+  .panel h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0 0 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+  }
+
+  .chart-holder { position: relative; height: 220px; }
+
+  /* ---------- Filter bar ---------- */
+  .filter-bar {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+
+  .filter-bar input[type="text"],
+  .filter-bar select {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 13px;
+    padding: 8px 10px;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: var(--panel);
+    color: var(--ink);
+  }
+
+  .filter-bar input[type="text"] { flex: 1; min-width: 200px; }
+
+  .filter-count {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    margin-left: auto;
+  }
+
+  /* ---------- Findings table ---------- */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+  }
+
+  thead th {
+    text-align: left;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    border-bottom: 1px solid var(--ink);
+    padding: 8px 10px;
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+  }
+
+  thead th:hover { color: var(--ink); }
+
+  thead th .sort-arrow { font-size: 10px; margin-left: 3px; opacity: 0.5; }
+
+  tbody tr {
+    border-bottom: 1px solid var(--line);
+  }
+
+  tbody td {
+    padding: 10px;
+    vertical-align: top;
+  }
+
+  tbody tr.level-high { border-left: 3px solid var(--flag-high); }
+  tbody tr.level-medium { border-left: 3px solid var(--flag-med); }
+  tbody tr.level-low { border-left: 3px solid var(--flag-low); }
+
+  .badge {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .badge.level-high { background: var(--flag-high-soft); color: var(--flag-high); }
+  .badge.level-medium { background: var(--flag-med-soft); color: var(--flag-med); }
+  .badge.level-low { background: var(--flag-low-soft); color: var(--flag-low); }
+
+  .cat-tag {
+    font-size: 11.5px;
+    color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  td.date-cell { font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; white-space: nowrap; color: var(--muted); }
+
+  a.source-link { color: var(--ink); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 2px; }
+  a.source-link:hover { text-decoration-color: var(--accent); }
+
+  .empty-row td {
+    text-align: center;
+    color: var(--muted);
+    padding: 28px 10px;
+    font-style: italic;
+  }
+
+  footer {
+    margin-top: 32px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  @media (max-width: 800px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .chart-row { grid-template-columns: 1fr; }
+    .case-header { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="case-header">
+    <div>
+      <h1>Findings Dashboard</h1>
+      <div class="case-meta">
+        <span>Case: <b id="meta-case">—</b></span>
+        <span>Subject: <b id="meta-subject">—</b></span>
+        <span>Prepared: <b id="meta-date">—</b></span>
+        <span>Classification: <b id="meta-classification">—</b></span>
+      </div>
+    </div>
+    <div class="stamp">Working File<br>Internal Use Only</div>
+  </div>
+
+  <div class="stats">
+    <div class="stat-card">
+      <div class="label">Total Findings</div>
+      <div class="value" id="stat-total">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">High Confidence</div>
+      <div class="value" id="stat-high">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">Categories Covered</div>
+      <div class="value" id="stat-categories">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">Sources Cited</div>
+      <div class="value" id="stat-sources">0</div>
+    </div>
+  </div>
+
+  <div class="chart-row">
+    <div class="panel">
+      <h2>Findings by Category</h2>
+      <div class="chart-holder"><canvas id="categoryChart"></canvas></div>
+    </div>
+    <div class="panel">
+      <h2>Confidence Breakdown</h2>
+      <div class="chart-holder"><canvas id="confidenceChart"></canvas></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Findings Log</h2>
+    <div class="filter-bar">
+      <input type="text" id="searchInput" placeholder="Filter by keyword…">
+      <select id="categoryFilter"><option value="">All categories</option></select>
+      <select id="confidenceFilter">
+        <option value="">All confidence levels</option>
+        <option value="High">High</option>
+        <option value="Medium">Medium</option>
+        <option value="Low">Low</option>
+      </select>
+      <span class="filter-count" id="filterCount"></span>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th data-key="date">Date <span class="sort-arrow">↕</span></th>
+          <th data-key="category">Category <span class="sort-arrow">↕</span></th>
+          <th data-key="finding">Finding <span class="sort-arrow">↕</span></th>
+          <th data-key="confidence">Confidence <span class="sort-arrow">↕</span></th>
+          <th data-key="source">Source</th>
+        </tr>
+      </thead>
+      <tbody id="findingsBody"></tbody>
+    </table>
+  </div>
+
+  <footer>
+    This dashboard renders findings embedded directly in this file (see the <code>findingsData</code>
+    block in the page source). Treat this file with the same classification and handling
+    requirements as the underlying report. Generated from the
+    <code>osint-tools/data-visualization/interactive-dashboards/</code> template —
+    see the accompanying README for instructions on replacing this sample data with your own.
+  </footer>
+
+</div>
+
+<script>
+  // ---------------------------------------------------------------
+  // Replace the contents of findingsData below with your own case
+  // metadata and findings, following the same structure. Each finding
+  // requires: finding, category, confidence (High/Medium/Low),
+  // reasoning, source, source_url (optional), date (YYYY-MM-DD).
+  // ---------------------------------------------------------------
+  const findingsData = {
+    case_id: "OSINT-2026-0142",
+    subject: "Example Trading Company Ltd.",
+    prepared_by: "OSINT Research Team",
+    date: "2026-07-25",
+    classification: "Confidential",
+    findings: [
+      {
+        finding: "Company incorporated in Delaware in 2019, remains in active status.",
+        category: "Corporate",
+        confidence: "High",
+        reasoning: "Directly confirmed via official state registry lookup.",
+        source: "Delaware Division of Corporations",
+        source_url: "https://icis.corp.delaware.gov",
+        date: "2026-06-01"
+      },
+      {
+        finding: "Registered agent shared with two other entities formed in the same period.",
+        category: "Corporate",
+        confidence: "Medium",
+        reasoning: "Common registered-agent use can also explain this pattern.",
+        source: "OpenCorporates cross-reference",
+        source_url: "https://opencorporates.com",
+        date: "2026-06-02"
+      },
+      {
+        finding: "No adverse media coverage identified over a 10-year search window.",
+        category: "Reputation",
+        confidence: "Medium",
+        reasoning: "Absence of coverage does not guarantee absence of activity.",
+        source: "News and regulatory database search",
+        source_url: "",
+        date: "2026-06-05"
+      },
+      {
+        finding: "Primary business domain registered six months before formal incorporation.",
+        category: "Technical",
+        confidence: "High",
+        reasoning: "Confirmed via historical WHOIS registration data.",
+        source: "WHOIS historical lookup",
+        source_url: "https://whois.domaintools.com",
+        date: "2026-06-03"
+      },
+      {
+        finding: "Domain currently resolves to shared commercial hosting infrastructure.",
+        category: "Technical",
+        confidence: "Low",
+        reasoning: "Shared hosting is common and not independently significant.",
+        source: "Passive DNS lookup",
+        source_url: "",
+        date: "2026-06-04"
+      },
+      {
+        finding: "Two named officers previously co-founded an unrelated entity in 2016.",
+        category: "Corporate",
+        confidence: "High",
+        reasoning: "Confirmed via two independent prior-filing registry records.",
+        source: "State business registry (historical filing)",
+        source_url: "",
+        date: "2026-06-06"
+      }
+    ]
+  };
+
+  // ---------------------------------------------------------------
+  // Rendering logic — no changes needed below this line for typical use.
+  // ---------------------------------------------------------------
+  const CONFIDENCE_ORDER = { High: 3, Medium: 2, Low: 1 };
+
+  function levelClass(confidence) {
+    const key = (confidence || "").trim();
+    if (key === "High") return "level-high";
+    if (key === "Medium") return "level-medium";
+    if (key === "Low") return "level-low";
+    return "";
+  }
+
+  function populateMeta(data) {
+    document.getElementById("meta-case").textContent = data.case_id || "—";
+    document.getElementById("meta-subject").textContent = data.subject || "—";
+    document.getElementById("meta-date").textContent = data.date || "—";
+    document.getElementById("meta-classification").textContent = data.classification || "—";
+  }
+
+  function populateStats(findings) {
+    const total = findings.length;
+    const high = findings.filter(f => f.confidence === "High").length;
+    const categories = new Set(findings.map(f => f.category).filter(Boolean));
+    const sources = new Set(findings.map(f => f.source).filter(Boolean));
+
+    document.getElementById("stat-total").textContent = total;
+    document.getElementById("stat-high").textContent = high;
+    document.getElementById("stat-categories").textContent = categories.size;
+    document.getElementById("stat-sources").textContent = sources.size;
+  }
+
+  function buildCharts(findings) {
+    if (typeof Chart === "undefined") {
+      console.warn("Chart.js did not load (no internet access to the CDN, or it was blocked). " +
+                    "Charts will be hidden; the findings table below is unaffected.");
+      document.querySelectorAll(".chart-holder").forEach(el => {
+        el.innerHTML = '<p style="color:var(--muted); font-size:12px; padding-top:80px; text-align:center;">' +
+                        'Chart library did not load (no internet access). Table data below is unaffected.</p>';
+      });
+      return;
+    }
+
+    const categoryCounts = {};
+    findings.forEach(f => {
+      const cat = f.category || "Uncategorized";
+      categoryCounts[cat] = (categoryCounts[cat] || 0) + 1;
+    });
+
+    const confidenceCounts = { High: 0, Medium: 0, Low: 0 };
+    findings.forEach(f => {
+      if (confidenceCounts.hasOwnProperty(f.confidence)) confidenceCounts[f.confidence]++;
+    });
+
+    new Chart(document.getElementById("categoryChart"), {
+      type: "bar",
+      data: {
+        labels: Object.keys(categoryCounts),
+        datasets: [{
+          data: Object.values(categoryCounts),
+          backgroundColor: "#a86b1f",
+          borderRadius: 3,
+          maxBarThickness: 42
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { grid: { display: false }, ticks: { font: { family: "IBM Plex Mono", size: 11 } } },
+          y: { beginAtZero: true, ticks: { precision: 0, font: { family: "IBM Plex Mono", size: 11 } }, grid: { color: "#e5e9ec" } }
+        }
+      }
+    });
+
+    new Chart(document.getElementById("confidenceChart"), {
+      type: "doughnut",
+      data: {
+        labels: ["High", "Medium", "Low"],
+        datasets: [{
+          data: [confidenceCounts.High, confidenceCounts.Medium, confidenceCounts.Low],
+          backgroundColor: ["#9c3b3b", "#9a7209", "#5b6b7a"],
+          borderWidth: 2,
+          borderColor: "#ffffff"
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: "bottom", labels: { font: { family: "IBM Plex Sans", size: 12 }, boxWidth: 12 } }
+        }
+      }
+    });
+  }
+
+  function populateCategoryFilter(findings) {
+    const select = document.getElementById("categoryFilter");
+    const categories = [...new Set(findings.map(f => f.category).filter(Boolean))].sort();
+    categories.forEach(cat => {
+      const opt = document.createElement("option");
+      opt.value = cat;
+      opt.textContent = cat;
+      select.appendChild(opt);
+    });
+  }
+
+  let currentSort = { key: "date", direction: "desc" };
+
+  function renderTable(findings) {
+    const searchTerm = document.getElementById("searchInput").value.toLowerCase();
+    const categoryFilter = document.getElementById("categoryFilter").value;
+    const confidenceFilter = document.getElementById("confidenceFilter").value;
+
+    let filtered = findings.filter(f => {
+      const matchesSearch = !searchTerm || (f.finding + " " + f.source).toLowerCase().includes(searchTerm);
+      const matchesCategory = !categoryFilter || f.category === categoryFilter;
+      const matchesConfidence = !confidenceFilter || f.confidence === confidenceFilter;
+      return matchesSearch && matchesCategory && matchesConfidence;
+    });
+
+    filtered.sort((a, b) => {
+      let av = a[currentSort.key];
+      let bv = b[currentSort.key];
+      if (currentSort.key === "confidence") {
+        av = CONFIDENCE_ORDER[av] || 0;
+        bv = CONFIDENCE_ORDER[bv] || 0;
+      }
+      if (av < bv) return currentSort.direction === "asc" ? -1 : 1;
+      if (av > bv) return currentSort.direction === "asc" ? 1 : -1;
+      return 0;
+    });
+
+    const tbody = document.getElementById("findingsBody");
+    tbody.innerHTML = "";
+
+    if (filtered.length === 0) {
+      tbody.innerHTML = '<tr class="empty-row"><td colspan="5">No findings match the current filters.</td></tr>';
+    } else {
+      filtered.forEach(f => {
+        const tr = document.createElement("tr");
+        tr.className = levelClass(f.confidence);
+        const sourceCell = f.source_url
+          ? `<a class="source-link" href="${f.source_url}" target="_blank" rel="noopener">${f.source}</a>`
+          : (f.source || "—");
+        tr.innerHTML = `
+          <td class="date-cell">${f.date || "—"}</td>
+          <td class="cat-tag">${f.category || "—"}</td>
+          <td>${f.finding}<br><span style="color:var(--muted); font-size:12px;">${f.reasoning || ""}</span></td>
+          <td><span class="badge ${levelClass(f.confidence)}">${f.confidence || "—"}</span></td>
+          <td>${sourceCell}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    document.getElementById("filterCount").textContent = `${filtered.length} of ${findings.length} shown`;
+  }
+
+  function attachSortHandlers(findings) {
+    document.querySelectorAll("thead th[data-key]").forEach(th => {
+      th.addEventListener("click", () => {
+        const key = th.dataset.key;
+        if (currentSort.key === key) {
+          currentSort.direction = currentSort.direction === "asc" ? "desc" : "asc";
+        } else {
+          currentSort = { key, direction: "asc" };
+        }
+        renderTable(findings);
+      });
+    });
+  }
+
+  function init() {
+    const findings = findingsData.findings || [];
+    populateMeta(findingsData);
+    populateStats(findings);
+    try {
+      buildCharts(findings);
+    } catch (err) {
+      console.warn("Chart rendering failed; table functionality is unaffected.", err);
+    }
+    populateCategoryFilter(findings);
+    attachSortHandlers(findings);
+    renderTable(findings);
+
+    document.getElementById("searchInput").addEventListener("input", () => renderTable(findings));
+    document.getElementById("categoryFilter").addEventListener("change", () => renderTable(findings));
+    document.getElementById("confidenceFilter").addEventListener("change", () => renderTable(findings));
+  }
+
+  init();
+</script>
+</body>
+</html>

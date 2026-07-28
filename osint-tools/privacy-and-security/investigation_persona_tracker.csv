@@ -1,0 +1,3 @@
+Persona ID,Platform,Purpose,Associated Case ID(s),Date Created,Created By,Last Reviewed,Review Status,Retirement Date,Notes
+[PERSONA-001],[Platform name],[Purpose, e.g. monitoring public forum activity],[Case ID(s)],[Date],[Analyst name],[Date],[Active/Under Review/Retired],[Date, if retired],[Notes — do NOT include passwords or security answers here; use a password manager]
+[PERSONA-002],[Platform name],[Purpose],[Case ID(s)],[Date],[Analyst name],[Date],[Active/Under Review/Retired],[Date, if retired],[Notes]

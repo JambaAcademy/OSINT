@@ -1,0 +1,19 @@
+{
+  "apps": [
+    {
+      "app_name": "Sample Bright Flashlight",
+      "category": "Flashlight/Utility",
+      "requested_permissions": ["CAMERA", "INTERNET", "CONTACTS", "LOCATION_PRECISE", "SMS"]
+    },
+    {
+      "app_name": "Sample Notes App",
+      "category": "Productivity",
+      "requested_permissions": ["STORAGE", "INTERNET", "NOTIFICATIONS", "CALENDAR"]
+    },
+    {
+      "app_name": "Sample Fitness Tracker",
+      "category": "Health & Fitness",
+      "requested_permissions": ["BODY_SENSORS", "LOCATION_APPROXIMATE", "STORAGE", "INTERNET", "CONTACTS"]
+    }
+  ]
+}

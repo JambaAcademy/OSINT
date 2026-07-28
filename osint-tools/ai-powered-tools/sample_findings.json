@@ -1,0 +1,39 @@
+{
+  "case_id": "OSINT-2026-0142",
+  "subject": "Example Trading Company Ltd.",
+  "prepared_for": "Chief Risk Officer",
+  "prepared_by": "OSINT Research Team",
+  "date": "2026-07-25",
+  "classification": "Confidential",
+  "full_report_reference": "See full report: due-diligence-example-trading-2026-0142.md",
+  "findings": [
+    {
+      "finding": "Example Trading Company Ltd. was incorporated in Delaware in 2019 and remains in active status per the state registry.",
+      "confidence": "High",
+      "reasoning": "Directly confirmed via official Delaware Division of Corporations registry lookup.",
+      "source": "Delaware Division of Corporations",
+      "source_url": "https://icis.corp.delaware.gov"
+    },
+    {
+      "finding": "The company's registered agent and one listed officer are shared with two other entities registered in the same period.",
+      "confidence": "Medium",
+      "reasoning": "Confirmed via registry cross-reference; common corporate service provider use can also explain a shared registered agent.",
+      "source": "OpenCorporates cross-reference",
+      "source_url": "https://opencorporates.com"
+    },
+    {
+      "finding": "No adverse media coverage or regulatory enforcement actions were identified for the company or its named officers.",
+      "confidence": "Medium",
+      "reasoning": "Based on a structured news and regulatory database search covering the last 10 years; absence of coverage does not guarantee absence of activity.",
+      "source": "News and regulatory database search",
+      "source_url": ""
+    },
+    {
+      "finding": "The company's primary business domain was registered six months before the company's formal incorporation date.",
+      "confidence": "High",
+      "reasoning": "Confirmed via WHOIS historical registration data.",
+      "source": "WHOIS historical lookup",
+      "source_url": "https://whois.domaintools.com"
+    }
+  ]
+}

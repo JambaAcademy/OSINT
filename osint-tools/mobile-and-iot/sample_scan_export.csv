@@ -1,0 +1,9 @@
+ip,port,banner
+203.0.113.10,554,RTSP/1.0 200 OK Server: Hikvision-Webs 3.0
+203.0.113.11,502,Modbus TCP Unit Identifier response, no auth
+203.0.113.12,9100,HP LaserJet JetDirect Printer Ready
+203.0.113.13,80,RomPager/4.51 UPnP/1.0 embedded router firmware
+203.0.113.14,32400,Plex Media Server 1.30.0
+203.0.113.15,22,OpenSSH 8.9p1 Ubuntu
+203.0.113.16,8080,Dahua IP Camera Web Interface
+203.0.113.17,102,Siemens S7comm PLC S7-1200

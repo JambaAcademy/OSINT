@@ -1,0 +1,10 @@
+# Sample corporate ownership hierarchy
+# Format: Parent Entity -> Child Entity
+
+Example Holdings Group -> Example Trading Co.
+Example Holdings Group -> Sample Manufacturing Ltd.
+Example Holdings Group -> Northside Consulting LLC
+Example Trading Co. -> Example Trading Co. (UK Branch)
+Example Trading Co. -> Example Trading Co. (APAC Branch)
+Sample Manufacturing Ltd. -> Sample Manufacturing (Logistics Division)
+Northside Consulting LLC -> Northside Consulting (Advisory Services)

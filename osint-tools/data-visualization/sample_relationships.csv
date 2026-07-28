@@ -1,0 +1,11 @@
+entity_a,entity_b,relationship_type
+Jordan A. Sample,Example Trading Co.,officer_of
+Jordan A. Sample,Sample Holdings LLC,officer_of
+Morgan T. Example,Example Trading Co.,officer_of
+Morgan T. Example,Northside Consulting LLC,officer_of
+Example Trading Co.,123 Main St Registered Agent Services,shares_registered_agent
+Sample Holdings LLC,123 Main St Registered Agent Services,shares_registered_agent
+Northside Consulting LLC,123 Main St Registered Agent Services,shares_registered_agent
+Jordan A. Sample,Morgan T. Example,co_founder
+Example Trading Co.,Example Trading Co. (UK Branch),parent_subsidiary
+Riley Q. Contact,Northside Consulting LLC,registered_agent_contact
