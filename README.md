@@ -1,10 +1,10 @@
 # 🔍 Complete OSINT Mastery Repository
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![GitHub stars](https://img.shields.io/github/stars/JambaAcademy/osint-mastery-guide.svg)](https://github.com/JambaAcademy/osint-mastery-guide/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/JambaAcademy/osint-mastery-guide.svg)](https://github.com/JambaAcademy/osint-mastery-guide/network)
-[![Contributors](https://img.shields.io/github/contributors/JambaAcademy/osint-mastery-guide.svg)](https://github.com/JambaAcademy/osint-mastery-guide/graphs/contributors)
-[![Last Commit](https://img.shields.io/github/last-commit/JambaAcademy/osint-mastery-guide.svg)](https://github.com/JambaAcademy/osint-mastery-guide/commits/main)
+[![GitHub stars](https://img.shields.io/github/stars/JambaAcademy/OSINT.svg)](https://github.com/JambaAcademy/OSINT)
+[![GitHub forks](https://img.shields.io/github/forks/JambaAcademy/OSINT.svg)](https://github.com/JambaAcademy/OSINT/forks)
+[![Contributors](https://img.shields.io/github/contributors/JambaAcademy/OSINT.svg)](https://github.com/JambaAcademy/OSINT/graphs/contributors)
+[![Last Commit](https://img.shields.io/github/last-commit/JambaAcademy/OSINT.svg)](https://github.com/JambaAcademy/OSINT/commits/main)
 
 > **The definitive collection of OSINT templates and tools for modern intelligence gathering and analysis**
 
