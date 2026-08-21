@@ -81,6 +81,7 @@
 | 45 | InVID | https://www.invid-project.eu/tools-and-services/invid-verification-plugin | Free | Video verification tools |
 | 46 | FotoForensics | https://fotoforensics.com | Free | Image analysis and forensics |
 | 47 | Jeffrey's Exif Viewer | http://exif.regex.info/exif.cgi | Free | EXIF data extraction from images |
+| 47A | Metadata Remover – Metadata Viewer | https://metadataremover.ai/metadata-viewer | Free | Browser-local viewer for EXIF, IPTC, XMP, and GPS metadata; corroborate metadata with other evidence |
 
 ## Dark Web & Deep Web
 
