@@ -20,6 +20,16 @@ Each subfolder includes a ready-to-use, tested working script demonstrating the 
 
 ---
 
+## External Tools
+
+| Tool | Description | Best For | Cost |
+|---|---|---|---|
+| [Jev Social](https://github.com/socai-io/jev-social) | Open-source local-browser social research tool in which Jev selects bounded socai operations and the application retains captured posts, comments, videos, and source links; each run covers one of Instagram, TikTok, or LinkedIn | Evidence-backed research on one supported social platform at a time; separate runs and analyst correlation are required for cross-platform work | Open source; OpenRouter API usage may incur cost |
+
+Use social research tools only for lawfully accessible public content or with proper authorization. Comply with applicable privacy law and each platform's terms, and independently verify captured evidence; see the [Social Media Intelligence foundational principles](../social-media-intelligence/README.md#foundational-principles-for-this-category).
+
+---
+
 ## Foundational Principle for This Category
 
 Every script and tool in this category produces a *lead*, not a *finding*. Before any AI/ML-assisted output is included in a final report, it should be independently verified by a human analyst, consistent with:
