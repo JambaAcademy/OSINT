@@ -192,4 +192,10 @@
 | 101 | WhatsApp Web | https://web.whatsapp.com | Free | Web version for messaging analysis |
 | 102 | Telegram OSINT Tools | Various | Free | Tools for Telegram investigation |
 
+## Threat Intelligence & Cybersecurity Indexes
+
+| Serial No | Tool Name | Link | Price | Description |
+|-----------|-----------|------|-------|-------------|
+| 103 | ICHI Internet Cyber Health Index | https://ichi.global | Free | Source-transparent daily barometer of internet-wide cyber health; aggregates threat intelligence feeds, CISA KEV, EPSS scores, ransomware trackers, and network monitoring data into a composite hourly score. Directional outside-in signal for situational awareness — not an indicator lookup or organizational risk assessment. |
+
 *Note: This table represents common OSINT tools across various categories. Pricing and availability may change. Always verify current information and comply with terms of service and applicable laws when using these tools.*
