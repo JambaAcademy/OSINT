@@ -43,6 +43,7 @@ This section covers tools and techniques built around a single major social medi
 |---|---|---|---|
 | Native search and Creative Center | TikTok's built-in search plus its public Creative Center trend-discovery tool | Trend research and public content discovery | Free |
 | TikTok Commercial Content Library | Public library of paid commercial and political ad content, similar in spirit to Meta's Ad Library | Investigating paid promotional activity on the platform | Free |
+| TKMetrics | Reports on public TikTok accounts: followers, engagement rate, average plays, top videos and hashtags | Sizing up a public account's reach and recent performance | Free reports; paid plans available |
 
 ## Reddit
 
